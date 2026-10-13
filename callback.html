@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DakituTV - TikTok authorization</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 16px; line-height: 1.6; color: #222; }
+  code, textarea { font-family: ui-monospace, monospace; }
+  textarea { width: 100%; height: 6rem; }
+</style>
+</head>
+<body>
+<h1>DakituTV</h1>
+<p id="msg">Waiting for TikTok authorization...</p>
+<textarea id="code" readonly hidden></textarea>
+<p><a href="index.html">Home</a> &middot; <a href="terms.html">Terms</a> &middot; <a href="privacy.html">Privacy</a></p>
+<script>
+  // Shows the authorization code that TikTok adds to the URL so the owner can paste it into the local script.
+  var p = new URLSearchParams(location.search);
+  var msg = document.getElementById("msg");
+  var box = document.getElementById("code");
+  if (p.get("code")) {
+    msg.textContent = "Authorization received. Copy this code into the script (it expires in a few minutes):";
+    box.value = p.get("code");
+    box.hidden = false;
+  } else if (p.get("error")) {
+    msg.textContent = "Authorization failed: " + p.get("error") + " " + (p.get("error_description") || "");
+  }
+</script>
+</body>
+</html>
